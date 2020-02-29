@@ -1,7 +1,7 @@
-package main
+package ion
 
 import "fmt"
 
-func ion_go_func() {
+func ion_func() {
 	fmt.Println("ion-go")
 }
