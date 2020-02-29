@@ -2,6 +2,6 @@ package ion
 
 import "fmt"
 
-func ion_func() {
+func PrintIonGo() {
 	fmt.Println("ion-go")
 }
