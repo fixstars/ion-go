@@ -1,7 +1,25 @@
 package ion
 
-import "fmt"
+// #cgo CFLAGS: -I${SRCDIR}/ion-core
+// #cgo LDFLAGS: -L${SRCDIR}/ion-core -lstdc++ -lion
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include "c_ion.h"
+import "C"
 
-func PrintIonGo() {
-	fmt.Println("ion-go")
+func CFFI() int {
+
+	var ret C.int
+	var b C.ion_builder_t
+
+	ret = C.ion_builder_create(&b)
+	if ret != 0 {
+		return int(ret)
+	}
+	ret = C.ion_builder_destroy(b)
+	if ret != 0 {
+		return int(ret)
+	}
+
+	return 0
 }
