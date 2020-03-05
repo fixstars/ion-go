@@ -7,6 +7,22 @@ package ion
 // #include "c_ion.h"
 import "C"
 
+import (
+	"errors"
+)
+
+type Builder struct {
+	b C.ion_builder_t
+}
+
+func (b Builder) SetTarget(target string) error {
+	ret := C.ion_builder_set_target(b.b, C.CString(target))
+	if ret != 0 {
+		return errors.New("ion_builder_set_target")
+	}
+	return nil
+}
+
 func CFFI() int {
 
 	ret := C.int(0)
