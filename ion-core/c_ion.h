@@ -40,6 +40,7 @@ int ion_node_set_param(ion_node_t, ion_param_t *, int);
 int ion_builder_create(ion_builder_t *);
 int ion_builder_destroy(ion_builder_t);
 int ion_builder_set_target(ion_builder_t, const char *);
+int ion_builder_with_bb_module(ion_builder_t, const char *);
 int ion_builder_add_node(ion_builder_t, const char *, ion_node_t *);
 int ion_builder_compile(ion_builder_t, const char *);
 int ion_builder_save(ion_builder_t, const char *);
