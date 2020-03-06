@@ -38,7 +38,7 @@ func DeleteNode(n *Node) error {
 	return nil
 }
 
-func (n Node) GetPort(key string) (*Port, error) {
+func (n Node) Get(key string) (*Port, error) {
 	p := Port{}
 	ret := C.ion_node_get_port(n.n, C.CString(key), &p.p)
 	if ret != 0 {
@@ -47,7 +47,7 @@ func (n Node) GetPort(key string) (*Port, error) {
 	return &p, nil
 }
 
-func (n Node) SetPort(ports ...*Port) error {
+func (n Node) Set(ports ...*Port) error {
 	ps := []C.ion_port_t{}
 
 	for _, p := range ports {

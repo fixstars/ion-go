@@ -71,11 +71,11 @@ func Test_Go(t *testing.T) {
 		}
 
 		var p *Port
-		if p, err = n0.GetPort("output"); err != nil {
+		if p, err = n0.Get("output"); err != nil {
 			t.Error(err)
 		}
 
-		if err = n1.SetPort(p, min0, extent0, min1, extent1, v); err != nil {
+		if err = n1.Set(p, min0, extent0, min1, extent1, v); err != nil {
 			t.Error(err)
 		}
 
