@@ -7,6 +7,21 @@ package ion
 // #include "c_ion.h"
 import "C"
 
+type TypeCode int
+
+const (
+	TypeInt    TypeCode = iota
+	TypeUInt            = iota
+	TypeFloat           = iota
+	TypeHandle          = iota
+)
+
+type Type struct {
+	code  TypeCode
+	bits  uint
+	lanes uint
+}
+
 func CFFI() int {
 
 	ret := C.int(0)
