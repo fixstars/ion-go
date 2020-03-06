@@ -48,7 +48,7 @@ func (b Builder) WithBBModule(module_name string) error {
 	return nil
 }
 
-func (b Builder) AddNode(key string) (*Node, error) {
+func (b Builder) Add(key string) (*Node, error) {
 	n := Node{}
 	ret := C.ion_builder_add_node(b.b, C.CString(key), &n.n)
 	if ret != 0 {
