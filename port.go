@@ -9,6 +9,7 @@ import "C"
 
 import (
 	"errors"
+	"runtime"
 )
 
 type Port struct {
@@ -26,6 +27,11 @@ func NewPort(key string, ty Type) (*Port, error) {
 	if ret != 0 {
 		return nil, errors.New("ion_port_create")
 	}
+
+	runtime.SetFinalizer(&p, func(p *Port) {
+		DeletePort(p)
+	})
+
 	return &p, nil
 }
 

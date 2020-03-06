@@ -9,6 +9,7 @@ import "C"
 
 import (
 	"errors"
+	"runtime"
 )
 
 type Node struct {
@@ -21,6 +22,11 @@ func NewNode() (*Node, error) {
 	if ret != 0 {
 		return nil, errors.New("ion_node_create")
 	}
+
+	runtime.SetFinalizer(&n, func(n *Node) {
+		DeleteNode(n)
+	})
+
 	return &n, nil
 }
 
@@ -41,11 +47,11 @@ func (n Node) GetPort(key string) (*Port, error) {
 	return &p, nil
 }
 
-func (n Node) SetPort(ports []*Port) error {
-	ps := make([]C.ion_port_t, len(ports))
+func (n Node) SetPort(ports ...*Port) error {
+	ps := []C.ion_port_t{}
 
-	for i := 0; i < len(ports); i++ {
-		ps[i] = ports[i].p
+	for _, p := range ports {
+		ps = append(ps, p.p)
 	}
 
 	ret := C.ion_node_set_port(n.n, &ps[0], C.int(len(ps)))
@@ -55,11 +61,11 @@ func (n Node) SetPort(ports []*Port) error {
 	return nil
 }
 
-func (n Node) SetParam(params []*Param) error {
-	ps := make([]C.ion_param_t, len(params))
+func (n Node) SetParam(params ...*Param) error {
+	ps := []C.ion_param_t{}
 
-	for i := 0; i < len(params); i++ {
-		ps[i] = params[i].p
+	for _, p := range params {
+		ps = append(ps, p.p)
 	}
 
 	ret := C.ion_node_set_param(n.n, &ps[0], C.int(len(ps)))

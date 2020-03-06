@@ -9,6 +9,7 @@ import "C"
 
 import (
 	"errors"
+	"runtime"
 )
 
 type Builder struct {
@@ -21,14 +22,23 @@ func NewBuilder() (*Builder, error) {
 	if ret != 0 {
 		return nil, errors.New("ion_builder_create")
 	}
+
+	runtime.SetFinalizer(&b, func(b *Builder) {
+		DeleteBuilder(b)
+	})
+
 	return &b, nil
 }
 
 func DeleteBuilder(b *Builder) error {
+	if b.b == nil {
+		return nil
+	}
 	ret := C.ion_builder_destroy(b.b)
 	if ret != 0 {
 		return errors.New("ion_builder_destroy")
 	}
+	b.b = nil
 	return nil
 }
 

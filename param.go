@@ -9,6 +9,7 @@ import "C"
 
 import (
 	"errors"
+	"runtime"
 )
 
 type Param struct {
@@ -21,6 +22,11 @@ func NewParam(key, value string) (*Param, error) {
 	if ret != 0 {
 		return nil, errors.New("ion_param_create")
 	}
+
+	runtime.SetFinalizer(&p, func(p *Param) {
+		DeleteParam(p)
+	})
+
 	return &p, nil
 }
 
