@@ -7,20 +7,19 @@ package ion
 // #include "c_ion.h"
 import "C"
 
-import (
-	"errors"
+type TypeCode int
+
+const (
+	TypeInt    TypeCode = iota
+	TypeUInt            = iota
+	TypeFloat           = iota
+	TypeHandle          = iota
 )
 
-type Builder struct {
-	b C.ion_builder_t
-}
-
-func (b Builder) SetTarget(target string) error {
-	ret := C.ion_builder_set_target(b.b, C.CString(target))
-	if ret != 0 {
-		return errors.New("ion_builder_set_target")
-	}
-	return nil
+type Type struct {
+	code  TypeCode
+	bits  uint
+	lanes uint
 }
 
 func CFFI() int {
