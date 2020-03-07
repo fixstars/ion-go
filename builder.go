@@ -96,7 +96,7 @@ func (b Builder) Load(file_path string) error {
 	return nil
 }
 
-func (b Builder) Read(r io.Reader) error {
+func (b Builder) LoadFromReader(r io.Reader) error {
 	var err error
 	var f *os.File
 
