@@ -96,7 +96,7 @@ func (b Builder) Load(file_path string) error {
 	return nil
 }
 
-func (b Builder) Read(r *io.Reader) error {
+func (b Builder) Read(r io.Reader) error {
 	var err error
 	var f *os.File
 
@@ -104,7 +104,7 @@ func (b Builder) Read(r *io.Reader) error {
 		return err
 	}
 
-	if _, err = io.Copy(f, *r); err != nil {
+	if _, err = io.Copy(f, r); err != nil {
 		return err
 	}
 	return b.Load(f.Name())
