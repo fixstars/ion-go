@@ -13,6 +13,7 @@ import (
 	"errors"
 	"io"
 	"io/ioutil"
+	"os"
 	"runtime"
 )
 
@@ -97,13 +98,14 @@ func (b Builder) Load(file_path string) error {
 
 func (b Builder) Read(r *io.Reader) error {
 	var err error
-	var tf *os.File
+	var f *os.File
 
-	if tf, err = ioutil.TempFile("", ""); err != nil {
+	if f, err = ioutil.TempFile("", ""); err != nil {
 		return err
 	}
-	if _, err = io.Copy(tf, r); err != nil {
+
+	if _, err = io.Copy(f, *r); err != nil {
 		return err
 	}
-	return Load(tf.Name())
+	return b.Load(f.Name())
 }
