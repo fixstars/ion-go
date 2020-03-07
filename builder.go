@@ -11,6 +11,8 @@ import "C"
 
 import (
 	"errors"
+	"io"
+	"io/ioutil"
 	"runtime"
 )
 
@@ -91,4 +93,17 @@ func (b Builder) Load(file_path string) error {
 		return errors.New("ion_builder_load")
 	}
 	return nil
+}
+
+func (b Builder) Read(r *io.Reader) error {
+	var err error
+	var tf *os.File
+
+	if tf, err = ioutil.TempFile("", ""); err != nil {
+		return err
+	}
+	if _, err = io.Copy(tf, r); err != nil {
+		return err
+	}
+	return Load(tf.Name())
 }
