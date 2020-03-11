@@ -1,7 +1,7 @@
 package ion
 
-// #cgo pkg-config libion
-// #include "c_ion.h"
+// #cgo pkg-config: libion
+// #include <ion/c_ion.h>
 import "C"
 
 type TypeCode int
