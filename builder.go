@@ -1,11 +1,6 @@
 package ion
 
-// #cgo CFLAGS: -I${SRCDIR}/ion-core
-// #cgo LDFLAGS: -L${SRCDIR}/ion-core
-// #cgo LDFLAGS: -Wl,-rpath=${SRCDIR}/ion-core
-// #cgo LDFLAGS: -lstdc++ -lion
-// #include <stdio.h>
-// #include <stdlib.h>
+// #cgo pkg-config libion
 // #include "c_ion.h"
 import "C"
 
