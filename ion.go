@@ -1,12 +1,7 @@
 package ion
 
-// #cgo CFLAGS:  -I${SRCDIR}/ion-core
-// #cgo LDFLAGS: -L${SRCDIR}/ion-core
-// #cgo LDFLAGS: -Wl,-rpath=${SRCDIR}/ion-core
-// #cgo LDFLAGS: -lstdc++ -lion
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include "c_ion.h"
+// #cgo pkg-config: libion
+// #include <ion/c_ion.h>
 import "C"
 
 type TypeCode int
@@ -74,7 +69,7 @@ func CFFI() int {
 			return int(ret)
 		}
 
-		ret = C.ion_builder_with_bb_module(b, C.CString("ion-bb-test"))
+		ret = C.ion_builder_with_bb_module(b, C.CString("libion-bb-test.so"))
 		if ret != 0 {
 			return int(ret)
 		}
@@ -168,6 +163,11 @@ func CFFI() int {
 		}
 
 		ret = C.ion_builder_load(b, C.CString("simple_graph.json"))
+		if ret != 0 {
+			return int(ret)
+		}
+
+		ret = C.ion_builder_with_bb_module(b, C.CString("libion-bb-test.so"))
 		if ret != 0 {
 			return int(ret)
 		}

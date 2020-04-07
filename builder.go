@@ -1,12 +1,7 @@
 package ion
 
-// #cgo CFLAGS: -I${SRCDIR}/ion-core
-// #cgo LDFLAGS: -L${SRCDIR}/ion-core
-// #cgo LDFLAGS: -Wl,-rpath=${SRCDIR}/ion-core
-// #cgo LDFLAGS: -lstdc++ -lion
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include "c_ion.h"
+// #cgo pkg-config: libion
+// #include <ion/c_ion.h>
 import "C"
 
 import (
@@ -108,4 +103,20 @@ func (b Builder) LoadFromReader(r io.Reader) error {
 		return err
 	}
 	return b.Load(f.Name())
+}
+
+func (b Builder) BBMetadata() (string, error) {
+	var n C.int
+	ret := C.ion_builder_bb_metadata(b.b, nil, 0, &n)
+	if ret != 0 {
+		return "", errors.New("ion_builder_bb_metadata")
+	}
+
+	buf := make([]C.char, n)
+	ret = C.ion_builder_bb_metadata(b.b, &buf[0], n, nil)
+	if ret != 0 {
+		return "", errors.New("ion_builder_bb_metadata")
+	}
+
+	return C.GoString(&buf[0]), nil
 }
