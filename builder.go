@@ -104,3 +104,19 @@ func (b Builder) LoadFromReader(r io.Reader) error {
 	}
 	return b.Load(f.Name())
 }
+
+func (b Builder) BBMetadata() (string, error) {
+	var n C.int
+	ret := C.ion_builder_bb_metadata(b.b, nil, 0, &n)
+	if ret != 0 {
+		return "", errors.New("ion_builder_bb_metadata")
+	}
+
+	buf := make([]C.char, n)
+	ret = C.ion_builder_bb_metadata(b.b, &buf[0], n, nil)
+	if ret != 0 {
+		return "", errors.New("ion_builder_bb_metadata")
+	}
+
+	return C.GoString(&buf[0]), nil
+}

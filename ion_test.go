@@ -1,6 +1,7 @@
 package ion
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -52,7 +53,7 @@ func Test_Go(t *testing.T) {
 			t.Error(err)
 		}
 
-		if err = b.WithBBModule("ion-bb-test"); err != nil {
+		if err = b.WithBBModule("libion-bb-test.so"); err != nil {
 			t.Error(err)
 		}
 
@@ -82,6 +83,17 @@ func Test_Go(t *testing.T) {
 		if err = b.Save("simple_graph.json"); err != nil {
 			t.Error(err)
 		}
+
+		var md string
+		if md, err = b.BBMetadata(); err != nil {
+			t.Error(err)
+		}
+
+		if md == "" {
+			panic("Unexpected results")
+		}
+
+		fmt.Printf("%v\n", md)
 	}
 
 	{
@@ -91,6 +103,10 @@ func Test_Go(t *testing.T) {
 		}
 
 		if err = b.Load("simple_graph.json"); err != nil {
+			t.Error(err)
+		}
+
+		if err = b.WithBBModule("libion-bb-test.so"); err != nil {
 			t.Error(err)
 		}
 
