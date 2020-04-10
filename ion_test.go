@@ -110,7 +110,7 @@ func Test_Go(t *testing.T) {
 			t.Error(err)
 		}
 
-		if err = b.Compile("simple_graph"); err != nil {
+		if err = b.Compile("simple_graph", &CompileOption{}); err != nil {
 			t.Error(err)
 		}
 	}

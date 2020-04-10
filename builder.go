@@ -16,6 +16,10 @@ type Builder struct {
 	b C.ion_builder_t
 }
 
+type CompileOption struct {
+	OutputDirectory string
+}
+
 func NewBuilder() (*Builder, error) {
 	b := Builder{}
 	ret := C.ion_builder_create(&b.b)
@@ -67,8 +71,9 @@ func (b Builder) Add(key string) (*Node, error) {
 	return &n, nil
 }
 
-func (b Builder) Compile(function_name string) error {
-	ret := C.ion_builder_compile(b.b, C.CString(function_name))
+func (b Builder) Compile(function_name string, option *CompileOption) error {
+	op := C.ion_builder_compile_option_t{output_directory: C.CString(option.OutputDirectory)}
+	ret := C.ion_builder_compile(b.b, C.CString(function_name), &op)
 	if ret != 0 {
 		return errors.New("ion_builder_compile")
 	}

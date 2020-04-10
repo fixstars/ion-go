@@ -172,7 +172,9 @@ func CFFI() int {
 			return int(ret)
 		}
 
-		ret = C.ion_builder_compile(b, C.CString("simple_graph"))
+		op := C.ion_builder_compile_option_t{output_directory: C.CString(".")}
+
+		ret = C.ion_builder_compile(b, C.CString("simple_graph"), &op)
 		if ret != 0 {
 			return int(ret)
 		}
