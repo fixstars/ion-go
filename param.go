@@ -1,6 +1,6 @@
 package ion
 
-// #cgo pkg-config: libion
+// #cgo pkg-config: ion-core
 // #include <ion/c_ion.h>
 import "C"
 
