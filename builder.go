@@ -1,6 +1,6 @@
 package ion
 
-// #cgo pkg-config: ion-core
+// #cgo pkg-config: ion-kit
 // #include <ion/c_ion.h>
 import "C"
 
