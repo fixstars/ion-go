@@ -27,27 +27,27 @@ func CFFI() int {
 		t := C.ion_type_t{code: C.ion_type_int, bits: 32, lanes: 1}
 
 		var min0, extent0, min1, extent1, v C.ion_port_t
-		ret = C.ion_port_create(&min0, C.CString("min0"), t)
+		ret = C.ion_port_create(&min0, C.CString("min0"), t, 0)
 		if ret != 0 {
 			return int(ret)
 		}
 
-		ret = C.ion_port_create(&extent0, C.CString("extent0"), t)
+		ret = C.ion_port_create(&extent0, C.CString("extent0"), t, 0)
 		if ret != 0 {
 			return int(ret)
 		}
 
-		ret = C.ion_port_create(&min1, C.CString("min1"), t)
+		ret = C.ion_port_create(&min1, C.CString("min1"), t, 0)
 		if ret != 0 {
 			return int(ret)
 		}
 
-		ret = C.ion_port_create(&extent1, C.CString("extent1"), t)
+		ret = C.ion_port_create(&extent1, C.CString("extent1"), t, 0)
 		if ret != 0 {
 			return int(ret)
 		}
 
-		ret = C.ion_port_create(&v, C.CString("v"), t)
+		ret = C.ion_port_create(&v, C.CString("v"), t, 0)
 		if ret != 0 {
 			return int(ret)
 		}
@@ -174,7 +174,7 @@ func CFFI() int {
 
 		op := C.ion_builder_compile_option_t{output_directory: C.CString(".")}
 
-		ret = C.ion_builder_compile(b, C.CString("simple_graph"), &op)
+		ret = C.ion_builder_compile(b, C.CString("simple_graph"), op)
 		if ret != 0 {
 			return int(ret)
 		}

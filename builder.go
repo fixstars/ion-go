@@ -73,7 +73,7 @@ func (b Builder) Add(key string) (*Node, error) {
 
 func (b Builder) Compile(function_name string, option *CompileOption) error {
 	op := C.ion_builder_compile_option_t{output_directory: C.CString(option.OutputDirectory)}
-	ret := C.ion_builder_compile(b.b, C.CString(function_name), &op)
+	ret := C.ion_builder_compile(b.b, C.CString(function_name), op)
 	if ret != 0 {
 		return errors.New("ion_builder_compile")
 	}

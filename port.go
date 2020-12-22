@@ -13,14 +13,14 @@ type Port struct {
 	p C.ion_port_t
 }
 
-func NewPort(key string, ty Type) (*Port, error) {
+func NewPort(key string, ty Type, dim int) (*Port, error) {
 	p := Port{}
 	t := C.ion_type_t{
 		code:  C.ion_type_code_t(ty.code),
 		bits:  C.uchar(ty.bits),
 		lanes: C.uchar(ty.lanes),
 	}
-	ret := C.ion_port_create(&p.p, C.CString(key), t)
+	ret := C.ion_port_create(&p.p, C.CString(key), t, C.int(dim))
 	if ret != 0 {
 		return nil, errors.New("ion_port_create")
 	}
